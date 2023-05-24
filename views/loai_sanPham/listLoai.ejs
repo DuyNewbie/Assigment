@@ -1,0 +1,154 @@
+<%- include('../htmls/wTop.ejs' , {title : 'Category' }) %>
+
+
+<script>
+    function onSleSort () {
+        d = document.getElementById("typeSort").value;
+        window.location = '/category/sort/' + d;
+    }
+</script>
+
+<div class="ms-5 me-5">
+    <h1 class="d-flex justify-content-center mt-4 mb-4">Quản lý loại sản phẩm</h1>
+
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container mb-3">
+            <a class="navbar-brand" href="#">Tools : </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a href="/category/add-category" class="btn btn-outline-primary">Add loại</a>
+                    </li>
+                    <span class="mt-2 ms-3"> Sort : </span>
+                    <select class="ms-2 rounded-2 ps-2 pe-2" id="typeSort" onchange="onSleSort()">
+                        <% 
+                            let noneS = '';
+                            let S1 = '';
+                            let S2 = '';
+                            if(typeSort == '1'){
+                                S1 = ' selected ';
+                            }else if(typeSort == '-1'){
+                                S2 = ' selected ';
+                            }else{
+                                noneS = ' selected ';
+                            }
+                        %>
+                        <option <%= noneS %> value="0">None</option>
+                        <option <%= S1 %> value="1">Tiến</option>
+                        <option <%= S2 %> value="-1">Lùi</option>
+                    </select>
+                </ul>
+                <form class="d-flex" role="search" action="/category/find-name">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="fName" value="<%= fName%>">
+                    <button type="submit" class="btn btn-outline-primary">Search</button>
+                </form>
+            </div>
+        </div>
+    </nav>
+
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th scope="col" class="col-1 text-center">STT</th>
+                <th scope="col" class="col-2 text-center">Tên</th>
+
+                <th scope="col" class="col-1 text-center">Sửa</th>
+                <th scope="col" class="col-1 text-center">Xóa</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% for(let i = 0;i < listLoai.length ; i++){ %>
+            <tr>
+                <th scope="row" class="text-center"><%= i + 1 %></th>
+                <td class="text-center"><%= listLoai[i].name %></td>
+
+                <td class="text-center">
+                    <button type="button" class="btn btn-success p-2" data-bs-toggle="modal"
+                        data-bs-target="#suaLoai<%= listLoai[i]._id %>">
+                        <img src="/images/editbold_white.png" alt="" width="30px" height="30px">
+                    </button>
+            
+                    <div class="modal fade" id="suaLoai<%= listLoai[i]._id %>" tabindex="-1" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog">
+                           <form action="" method="post">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Sửa sản phẩm</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <input type="hidden" name="idLoai" value="<%= listLoai[i]._id %>">
+                                    <div class="mb-4">
+                                        <label for="exampleInputEmail1" class="form-label" >Tên</label>
+                                        <input type="text" class="form-control" name="name"  value="<%= listLoai[i].name %>">
+                                    </div>
+                                    
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-primary">Save changes</button>
+                                </div>
+                            </div>
+                           </form>
+                        </div>
+                    </div>
+                </td>
+                <td class="text-center">
+                    <button type="button" class="btn btn-danger p-2" data-bs-toggle="modal"
+                        data-bs-target="#xoaSPModal<%= listLoai[i]._id %>">
+                        <img src="/images/deleteWhite.png" alt="" width="30px" height="30px">
+                    </button>
+            
+                    <div class="modal fade" id="xoaSPModal<%= listLoai[i]._id %>" tabindex="-1" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Xóa sản phẩm</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <p>Bạn có chắc muốn xóa loại sản phẩm này ?</p>
+                                    <p>Nếu xóa thì các sản phẩm có cùng thể loại cũng bị xóa theo!</p>
+                                
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal">Close</button>
+                                        
+                                    <a class="btn btn-primary" href="/category/delete/<%= listLoai[i]._id %>">Xóa</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <% } %>
+        </tbody>
+    </table>
+
+    <div class="container mb-5">
+        <div class="text">1 trên 12</div>
+        <div class="d-flex justify-content-end">
+            <nav aria-label="Page navigation example">
+                <ul class="pagination">
+                    <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>
+<%- include('../htmls/wBottom.ejs') %>

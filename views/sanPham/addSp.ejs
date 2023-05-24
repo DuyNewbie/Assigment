@@ -1,0 +1,49 @@
+<%- include('../htmls/wTop.ejs' , {title : "Add san pham"}) %>
+
+<div class="container mb-5">
+    <h1 class="d-flex justify-content-center mt-4 mb-4">Thêm sản phẩm</h1>
+    <%= msg %>
+    <div class="card m-5 w-50 vstack gap-2 col-md-5 mx-auto">
+        <div class="card-body m-3">
+            <form action="" method="post"> 
+
+                <div class="input-group mb-3">
+                    <label class="input-group-text" for="inputGroupFile01">Ảnh</label>
+                    <input type="file" class="form-control" name="avatar">
+                  </div>
+
+                <div class="mb-4">
+                    <label for="exampleInputEmail1" class="form-label" >Tên</label>
+                    <input type="text" class="form-control" name="name" id="inputTen">
+                </div>
+
+                <div class="mb-4">
+                    <label for="exampleInputEmail1" class="form-label" >Loại</label>
+                    <select name="category" id="">
+                        <% listTL.forEach(row => { %>
+                            <option value="<%= row._id %>"><%= row.name %></option>
+                        <% }) %>
+                
+                    </select>
+                </div>
+
+                <div class="mb-3  mt-3">
+                    <label for="exampleInputEmail1" class="form-label" >Giá</label>
+                    <input type="number" class="form-control" name="price" id="inputTen">
+                </div>
+                
+                <div class="mb-3">
+                    <label for="exampleInputEmail1" class="form-label">Nội dung</label>
+                    <textarea class="form-control" name="description" id="inputTen" cols="30" rows="5"></textarea>
+                </div>
+
+                <div class="d-flex justify-content-center">
+                    <button type="submit" class="btn btn-primary w-50 mt-3">Submit</button>
+                </div>
+                
+              </form>
+        </div>
+      </div>
+</div>
+
+<%- include('../htmls/wBottom.ejs') %>

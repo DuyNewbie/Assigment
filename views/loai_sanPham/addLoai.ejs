@@ -1,0 +1,29 @@
+<%- include('../htmls/wTop.ejs' , {title : "add Category"}) %>
+
+<div class="container mb-5">
+    <h1 class="d-flex justify-content-center mt-4 mb-4">Thêm loại sản phẩm</h1>
+
+    <div class="card m-5 w-50 vstack gap-2 col-md-5 mx-auto">
+        <div class="card-body m-3">
+            <form action="" method="post"> 
+                <div class="mb-4">
+                    <label for="exampleInputEmail1" class="form-label" >Tên</label>
+                    <input type="text" class="form-control" name="name" id="inputTen">
+                </div>
+
+                <div class="d-flex justify-content-center">
+                    <button type="submit" class="btn btn-primary w-50 mt-3">Submit</button>
+                </div>
+
+                <%  if(typeError){ %>
+                    <span class="text-danger"> * <%= msg %></span>
+                <%  }else{ %>
+                    <span class="text-success"> <%= msg %></span>
+                <% } %>
+                
+            </form>
+        </div>
+      </div>
+</div>
+
+<%- include('../htmls/wBottom.ejs') %>

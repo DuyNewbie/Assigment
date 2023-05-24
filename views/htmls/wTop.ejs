@@ -1,0 +1,94 @@
+<% 
+    var acHome = '';
+    var acSp = '';
+    var acUser = '';
+    var acProduct = '';
+
+    if (typeof(title) == 'undefined') {
+        title = '';
+    }
+
+    if(title != ''){
+        if(title == 'Home'){
+            acHome = 'active';
+        }else if(title == 'Add san pham' || title == 'San pham'){
+            acSp = 'active';
+        }else if(title == 'Info' || title == 'set Info'){
+            acUser = 'active';
+        }else if(title == 'Category' || title == 'add Category'){
+          acProduct = 'active';
+        }
+    }
+%>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="/stylesheets/bootstrap-5.2.3-dist/css/bootstrap.min.css">
+    <script src="/stylesheets/bootstrap-5.2.3-dist/js/bootstrap.bundle.js"></script>
+    <title><%= title %></title>
+    <style>
+        .active {
+            font-weight: 500;
+            font-size: 17px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid bg-light mb-5">
+        <div class="container">
+            <nav class="navbar navbar-expand-lg">
+                <div class="container-fluid">
+                  <a class="navbar-brand fs-3 fw-semibold" href="/">BaDuy</a>
+                  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                  </button>
+                  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                      <li class="nav-item">
+                        <a class="nav-link <%- acHome %>" href="/">Home</a>
+                      </li>
+    
+                      <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle <%- acSp %>" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                          Sản phẩm
+                        </a>
+                        <ul class="dropdown-menu">
+                          <li><a class="dropdown-item" href="/sp">Sản phẩm</a></li>
+                          <li><a class="dropdown-item" href="/sp/add-sp">Thêm sản phẩm</a></li>
+                        </ul>
+                      </li>
+    
+                      <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle <%- acUser %>" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                          Tài khoản
+                        </a>
+                        <ul class="dropdown-menu">
+                          <li><a class="dropdown-item" href="/user">Tài khoản</a></li>
+                          <li><a class="dropdown-item" href="/user/them-tai-khoan">Tạo tài khoản</a></li>
+                        </ul>
+                      </li>
+
+                      <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle <%- acProduct %>" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                          Loại
+                        </a>
+                        <ul class="dropdown-menu">
+                          <li><a class="dropdown-item" href="/category">Loại sản phẩm</a></li>
+                          <li><a class="dropdown-item" href="/category/add-category">Thêm loại sản phẩm</a></li>
+                        </ul>
+                      </li>
+                    </ul>
+                    <form class="d-flex" role="search">
+                      <a class="btn btn-outline-primary" style="width: 100px;" href="/login">Login</a>
+                    </form>
+                  </div>
+                </div>
+              </nav>
+        </div>
+    </div>
+
+        
+        

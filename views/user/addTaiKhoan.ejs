@@ -1,0 +1,53 @@
+<%- include('../htmls/wTop.ejs' , {title : 'set Info'}) %>
+
+<div class="container mb-5">
+    <h1 class="d-flex justify-content-center mt-4 mb-4">Tao tài khoản</h1>
+
+    <div class="card m-5 w-50 vstack gap-2 col-md-5 mx-auto">
+        <div class="card-body m-3">
+            <form action="" method="post">
+                <div class="input-group mb-3">
+                    <label class="input-group-text" for="inputGroupFile01">Ảnh đại diện</label>
+                    <input type="file" class="form-control" name="avatar" value="<%= avatar  %>">
+                  </div>
+
+                <div class="mb-4">
+                    <label for="exampleInputEmail1" class="form-label" >Tên đăng nhập</label>
+                    <input type="text" class="form-control" name="user_name" value="<%= user_name  %>">
+                </div>
+
+                <div class="mb-4">
+                    <label for="exampleInputEmail1" class="form-label" >Tên đầy đủ</label>
+                    <input type="text" class="form-control" name="name" value="<%= name  %>">
+                </div>
+
+                <div class="mb-3  mt-3">
+                    <label for="exampleInputEmail1" class="form-label" >Email</label>
+                    <input type="text" class="form-control" name="email" value="<%= email  %>">
+                </div>
+
+                <div class="mb-3  mt-3">
+                    <label for="exampleInputEmail1" class="form-label" >Password</label>
+                    <input type="password" class="form-control" name="passwod" value="<%= passw  %>">
+                </div>
+
+                <div class="mb-3  mt-3">
+                    <label for="exampleInputEmail1" class="form-label" >rePassword</label>
+                    <input type="password" class="form-control" name="rePassword" value="<%= rePass  %>">
+                </div>
+
+                <div class="d-flex justify-content-center">
+                    <button type="submit" class="btn btn-primary w-50 mt-3">Submit</button>
+                </div>
+                
+            </form>
+            <%  if(typeError){ %>
+                <span class="text-danger"> * <%= msg %></span>
+            <%  }else{ %>
+                    <span class="text-success"> <%= msg %></span>
+            <% } %>
+        </div>
+      </div>
+</div>
+
+<%- include('../htmls/wBottom.ejs') %>

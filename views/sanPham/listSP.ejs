@@ -1,0 +1,222 @@
+<%- include('../htmls/wTop.ejs' , {title : 'San pham' }) %>
+
+<script>
+    function onSle () {
+        d = document.getElementById("fLoaiSP").value;
+        window.location = '/sp/id_category/' + d;
+    }
+
+</script>
+
+    <% var idSP='' %>
+    
+        <div class="ms-5 me-5">
+            <h1 class="d-flex justify-content-center mt-4 mb-4">Quản lý sản phẩm</h1>
+
+            <nav class="navbar navbar-expand-lg bg-body-tertiary">
+                <div class="container mb-3">
+                    <a class="navbar-brand" href="#">Tools : </a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                            <li class="nav-item">
+                                <a href="/sp/add-sp" class="btn btn-outline-primary">Add tài khoản</a>
+                            </li>
+
+                            <span class="mt-2 ms-3"> Loại : </span>
+                            <select class="ms-2 rounded-2 ps-2 pe-2" id="fLoaiSP" onchange="onSle()">
+                                <option value="0">All</option>
+                                <%listTL.forEach( (row)=> { 
+                                    let selected = '';
+                                    if(String(row._id) == idLoaiFind){
+                                        selected = ' selected ';
+                                    }  
+                                    %>
+                                    <option <%= selected %> value="<%= row._id %>"> <%= row.name %> </option>
+                                <% }) %>                                
+                            </select>
+                            
+                        </ul>
+
+                        <form class="d-flex" role="search" action="/sp/find-name">
+                            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="fName" value="<%= fName %>">
+                            <button type="submit" class="btn btn-outline-primary">Search</button>
+                        </form>
+
+                    </div>
+                </div>
+            </nav>
+
+            <table class="table table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col" class="col-1 text-center">STT</th>
+                        <th scope="col" class="col-1 text-center">Ảnh</th>
+                        <th scope="col" class="col-2 text-center">
+                            <a href="/sp/sort/<%= typeSort%>/name">Tên</a>
+                        </th>
+                        <th scope="col" class="col-1 text-center">Loại</th>
+                        <th scope="col" class="col-4 text-center">Mô tả</th>
+                        <th scope="col" class="col-1 text-center">
+                            <a href="/sp/sort/<%= typeSort%>/price">Giá</a>
+                            </th>
+
+                        <th scope="col" class="col-1 text-center">Sửa</th>
+                        <th scope="col" class="col-1 text-center">Xóa</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% for(let i=0;i < listSP.length ; i++){ %>
+                        <tr>
+                            <th scope="row" class="text-center">
+                                <%= i + 1 %>
+                            </th>
+                            <td class="text-center"><img src="/images/dienthoai/<%= listSP[i].avatar %>" alt="" width="80px" height="80px">
+                            </td>
+                            <td class="text-center">
+                                <a href="/sp/chi-tiet/<%= listSP[i]._id %>"><%= listSP[i].name %></a>
+                                
+                            </td>
+                            <td class="text-center">
+                                <% if(typeof(listSP[i].id_category) != 'undefined' ) { %>
+                                    <%= listSP[i].id_category.name %>
+                                        <% } %>
+                            </td>
+                            <td class="text-center">
+                                <%= listSP[i].description %>
+                            </td>
+                            <th class="text-center">
+                                <%= listSP[i].price %>
+                            </th>
+                            <td class="text-center">
+
+                                <button type="button" class="btn btn-success p-2" data-bs-toggle="modal"
+                                    data-bs-target="#suaSPModal<%= listSP[i]._id %>">
+                                    <img src="/images/editbold_white.png" alt="" width="30px" height="30px">
+
+                                </button>
+
+                                <div class="modal fade" id="suaSPModal<%= listSP[i]._id %>" tabindex="-1"
+                                    aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h1 class="modal-title fs-5" id="exampleModalLabel">Sửa sản phẩm</h1>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <form action="" method="post">
+                                                    <input type="hidden" name="idSP" value="<%= listSP[i]._id %>">
+                                                    <div class="input-group mb-3">
+                                                        <label class="input-group-text"
+                                                            for="inputGroupFile01">Ảnh</label>
+                                                        <input type="file" class="form-control">
+                                                    </div>
+
+                                                    <div class="mb-4">
+                                                        <label for="exampleInputEmail1" class="form-label">Tên</label>
+                                                        <input type="text" class="form-control" name="name"
+                                                            value="<%= listSP[i].name %>">
+                                                    </div>
+
+                                                    <div class="mb-4">
+                                                        <label for="exampleInputEmail1" class="form-label">Lọai</label>
+                                                        <select name="category" id="">
+                                                            <%listTL.forEach( (row)=> {
+                                                                let selected = '';
+                                                                if(String(row._id) == listSP[i].id_category._id){
+                                                                selected = ' selected ';
+                                                                } %>
+                                                                <option <%=selected%> value="<%= row._id %>">
+                                                                        <%= row.name %>
+                                                                </option>
+                                                                <% }) %>
+                                                        </select>
+
+                                                    </div>
+
+
+                                                    <div class="mb-3  mt-3">
+                                                        <label for="exampleInputEmail1" class="form-label">Giá</label>
+                                                        <input type="number" class="form-control" id="inputTen" min="0"
+                                                            name="price" value="<%= listSP[i].price %>">
+                                                    </div>
+
+                                                    <div class="mb-3">
+                                                        <label for="exampleInputEmail1" class="form-label">Nội
+                                                            dung</label>
+                                                        <textarea class="form-control" name="description" id="inputTen"
+                                                            cols="30" rows="5"><%= listSP[i].description %></textarea>
+                                                    </div>
+
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary"
+                                                    data-bs-dismiss="modal">Close</button>
+                                                <button type="submit" class="btn btn-primary">Save changes</button>
+                                            </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <button type="button" class="btn btn-danger p-2" data-bs-toggle="modal"
+                                    data-bs-target="#xoaSP<%= listSP[i]._id%>">
+                                    <img src="/images/deleteWhite.png" alt="" width="30px" height="30px">
+                                </button>
+
+                                <div class="modal fade" id="xoaSP<%= listSP[i]._id%>" tabindex="-1"
+                                    aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h1 class="modal-title fs-5" id="exampleModalLabel">Xóa sản phẩm</h1>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <p>Bạn có chắc muốn xóa sản phẩm này ?</p>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary"
+                                                    data-bs-dismiss="modal">Close</button>
+                                                <a class="btn btn-primary" href="/sp/delete/<%= listSP[i]._id%>">Xóa</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <% } %>
+                </tbody>
+            </table>
+
+            <div class="container mb-5">
+                <div class="text">1 trên 12</div>
+                <div class="d-flex justify-content-end">
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination">
+                            <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+                            <li class="page-item"><a class="page-link" href="#">1</a></li>
+                            <li class="page-item"><a class="page-link" href="#">2</a></li>
+                            <li class="page-item"><a class="page-link" href="#">3</a></li>
+                            <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+
+        <%- include('../htmls/wBottom.ejs') %>
+
+            <script>
+                function onCl() {
+                    console.log("dd")
+                }
+            </script>
